@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Generate Reports</title>
+    <script src="/echarts.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css" />
+  </head>
+  <body>
+    <% include partials/nav %>
+
+    <div class="container">
+      <br />
+      <h3>Generate Report</h3>
+      <div class="row">
+        <% reports.forEach(report => { %>
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"><%= report.name %></h5>
+              <p class="card-text"><%= report.description %></p>
+              <p class="card-text">
+                <small class="text-muted"><%= report.chart_type %></small>
+              </p>
+              <a href="/draw/<%= report.id %>" class="btn btn-success"
+                >Generate Chart</a
+              >
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+      <br />
+
+      <br /><br />
+
+      <div
+        id="main"
+        class="container"
+        style="width: 600px; height:400px;"
+      ></div>
+
+      <p style="visibility: hidden;" id="chartParameters"><%= params %></p>
+      <p style="visibility: hidden;" id="chartValues"><%= vals %></p>
+      <p style="visibility: hidden;" id="chartType"><%= chart %></p>
+      <br /><br />
+    </div>
+
+    <% include partials/footer %>
+
+    <script type="text/javascript">
+      let chartType = document.getElementById("chartType").textContent;
+      console.log(chartType);
+
+      switch (chartType) {
+        case "line":
+          console.log("line");
+
+          // console.log(document.getElementById('chartParameters').textContent)
+          let params = document
+            .getElementById("chartParameters")
+            .textContent.split(",");
+          console.log(params);
+          let values = document
+            .getElementById("chartValues")
+            .textContent.split(",")
+            .map(function(item) {
+              return parseInt(item, 10);
+            });
+          var line = echarts.init(document.getElementById("main"));
+
+          option = {
+            title: {
+              text: "Line Chart"
+            },
+            xAxis: {
+              type: "category",
+              data: params
+            },
+            yAxis: {
+              type: "value"
+            },
+            series: [
+              {
+                data: values,
+                type: "line"
+              }
+            ]
+          };
+          line.setOption(option);
+          break;
+        case "bar":
+          console.log("bar");
+
+          console.log(document.getElementById("chartParameters").textContent);
+          let barParams = document
+            .getElementById("chartParameters")
+            .textContent.split(",");
+          let barValues = document
+            .getElementById("chartValues")
+            .textContent.split(",")
+            .map(function(item) {
+              return parseInt(item, 10);
+            });
+          var line = echarts.init(document.getElementById("main"));
+          option = {
+            title: {
+              text: "Bar Chart"
+            },
+            xAxis: {
+              type: "category",
+              data: barParams
+            },
+            yAxis: {
+              type: "value"
+            },
+            series: [
+              {
+                data: barValues,
+                type: "bar"
+              }
+            ]
+          };
+          line.setOption(option);
+          break;
+        case "pie":
+          console.log("pie");
+
+          console.log(document.getElementById("chartParameters").textContent);
+          let pieParams = document
+            .getElementById("chartParameters")
+            .textContent.split(",");
+          let pieValues = document
+            .getElementById("chartValues")
+            .textContent.split(",")
+            .map(function(item) {
+              return parseInt(item, 10);
+            });
+          let drum = [];
+          for (let i = 0; i <= pieParams.length - 1; i++) {
+            drum.push({ name: pieParams[i], value: pieValues[i] });
+          }
+          console.log(drum);
+          let chart1 = echarts.init(document.getElementById("main"));
+          chart1.setOption({
+            title: {
+              text: "A pie",
+              show: true,
+              textStyle: {
+                color: "black"
+              }
+            },
+            toolbox: {
+              feature: {
+                saveAsImage: {
+                  type: "jpg",
+                  name: "Pie Clip",
+                  title: "Save as an Image",
+                  pixelRatio: 1
+                }
+              }
+            },
+            series: [
+              {
+                name: "Ref Page",
+                type: "pie",
+                legendHoverLink: true,
+                radius: "60%",
+                data: drum
+              }
+            ]
+          });
+          break;
+      }
+    </script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
+  </body>
+</html>

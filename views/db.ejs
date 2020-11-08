@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="/echarts.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="/bootstrap-4.3.1-dist/css/bootstrap.min.css">
+  <title><%= title %></title>
+  
+</head>
+<body>
+    
+  <nav class="navbar navbar-light bg-light justify-content-center">
+    <a class="navbar-brand" href="#">
+      <img src="/bootstrap-4.3.1-dist/favicon.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
+      Charter
+    </a>
+
+      <ul class="nav justify-content-center">
+        <li class="nav-item">
+          <a class="nav-link" href="/chart/">Data Entry</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/chart/db">DB Query</a>
+        </li>
+      </ul>
+  </nav>
+
+  <br><br><br>
+
+  <div class="container">
+    <h3>Select Target DataBase</h3>
+    <div class="container">
+        <!-- Accordion -->
+        <div class="accordion" id="accordionExample">
+          <div class="card">
+            <div class="card-header" id="headingOne">
+              <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  MySQL
+                </button>
+              </h2>
+            </div>
+        
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div class="card-body">
+                  <form id="MySQL-form" method="POST" action="/chart/mysql">
+                      <div class="form-group">
+                        <label for="sql-host">Host</label>
+                        <input type="text" class="form-control" id="sql-host" name="sqlHost" placeholder="localhost">
+                        <small id="Help" class="form-text text-muted">Please enter the address of your host server</small>
+                      </div>
+                      <div class="form-group">
+                        <label for="sql-username">Username</label>
+                        <input type="text" class="form-control" id="sql-username" name="sqlUsername" placeholder="root">
+                        <small id="Help" class="form-text text-muted">Please enter your username for your Database client</small>
+                      </div>
+                      <div class="form-group">
+                        <label for="sql-password">Password</label>
+                        <input type="password" class="form-control" id="sql-password" name="sqlPassword" placeholder="12345#">
+                        <small id="Help" class="form-text text-muted">Please enter your password for your Database client</small>
+                      </div>
+                      <div class="form-group">
+                        <label for="database-name">Database Name</label>
+                        <input type="text" class="form-control" id="database-name" name="sqlDatabase" placeholder="country">
+                        <small id="emailHelp" class="form-text text-muted">Please enter the name of the Database you wish to target</small>
+                      </div>
+                      <div class="form-group">
+                        <label for="sql-query">SQL Query</label>
+                        <input type="text" class="form-control" id="sql-query" name="sqlQuery" placeholder="SELECT city, population FROM cities">
+                        <small id="emailHelp" class="form-text text-muted">Please enter your query selecting two fields to generate a chart from</small>
+                      </div>
+                      <div class="form-row">
+                          <div class="form-group col-md-4">
+                            <label for="xAxis">X Axis</label>
+                            <input type="text" class="form-control" id="xAxis" name="xAxis">
+                          </div>
+                          
+                          <div class="form-group col-md-4">
+                            <label for="yAxis">Y Axis</label>
+                            <input type="text" class="form-control" id="yAxis" name="yAxis">
+                          </div>
+                        </div>
+                      
+                      <div class="form-row">
+                        <div class="form-group col-md-4">
+                          <select id="cahrt-type" class="form-control" name="chartType">
+                            <option value="line" selected>Line Chart</option>
+                            <option value="bar">Bar Chart</option>
+                            <option value="pie">Pie Chart</option>
+                          </select>
+                        </div>
+                        
+                        <div class="col-auto my-1">
+                            <input type="submit" class="btn btn-primary" value="Draw" onclick="lineChart();">
+                          </div>
+                      </div>
+                       
+                    </form>
+                  </div>
+                </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingTwo">
+              <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    PostgreSQL
+                </button>
+              </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+              <div class="card-body">
+                
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  SQL Server
+                </button>
+              </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <div class="card-body">
+                  
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  Cassandra
+                </button>
+              </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <div class="card-body">
+                  
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  Couchbase
+                </button>
+              </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <div class="card-body">
+                  
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  CouchDB
+                </button>
+              </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <div class="card-body">
+                  
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  MongoDB
+                </button>
+              </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <div class="card-body">
+                  
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  Neo4j
+                </button>
+              </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <div class="card-body">
+                  
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  Oracle
+                </button>
+              </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <div class="card-body">
+                  
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  Redis
+                </button>
+              </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <div class="card-body">
+                  
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  SQLite(3)
+                </button>
+              </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <div class="card-body">
+                  
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  ElasticSearch
+                </button>
+              </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <div class="card-body">
+                  
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  LevelDB
+                </button>
+              </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <div class="card-body">
+                  
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <p id="chartParameters"><%= params %></p>
+    <p id="chartValues"><%= vals %></p>
+    <p id="chartType"><%= chart %></p>
+
+    <br><br>
+    
+    <div id="main" class="container" style="width: 600px; height:400px;"></div>
+    
+    <br><br>
+  </div> 
+
+  <nav class="navbar fixed-bottom navbar-light bg-light justify-content-center">
+    <p>&copy;2019 || Developed by <a href="#">Femi Bankole</a></p>
+  </nav>
+
+  <script type="text/javascript">  
+    let chartType = document.getElementById('chartType').textContent;
+    console.log(chartType)
+
+    switch (chartType) {
+      case "line":
+        console.log('line')
+        
+        // console.log(document.getElementById('chartParameters').textContent)
+        let params = document.getElementById('chartParameters').textContent.split(',');
+        console.log(params)
+        let values = document.getElementById('chartValues').textContent.split(',').map(function(item) {
+        return parseInt(item, 10);
+        });
+        var line = echarts.init(document.getElementById('main'));
+
+        option = {
+        title: {
+        text: 'Line Chart'
+        },
+        xAxis: {
+        type: 'category',
+        data: params
+        },
+        yAxis: {
+        type: 'value'
+        },
+        series: [{
+        data: values,
+        type: 'line'
+        }]
+        };
+        line.setOption(option);
+        break;
+      case "bar":
+        console.log('bar')
+        
+        console.log(document.getElementById('chartParameters').textContent)
+        let barParams = document.getElementById('chartParameters').textContent.split(',');
+        let barValues = document.getElementById('chartValues').textContent.split(',').map(function(item) {
+        return parseInt(item, 10);
+        });
+        var line = echarts.init(document.getElementById('main'));
+        option = {
+          title: {
+            text: 'Bar Chart'
+          },
+          xAxis: {
+            type: 'category',
+            data: barParams
+          },
+          yAxis: {
+            type: 'value'
+          },
+          series: [{
+          data: barValues,
+            type: 'bar'
+          }]
+        };
+        line.setOption(option);
+        break;
+      case "pie":
+        console.log('pie')
+        
+        console.log(document.getElementById('chartParameters').textContent)
+        let pieParams = document.getElementById('chartParameters').textContent.split(',');
+        let pieValues = document.getElementById('chartValues').textContent.split(',').map(function(item) {
+        return parseInt(item, 10);
+        });
+        let drum = [];
+        for(let i = 0; i <= pieParams.length -1; i++) {
+        drum.push({name: pieParams[i], value: pieValues[i]})
+        }
+        console.log(drum)
+        let chart1 = echarts.init(document.getElementById('main'))
+        chart1.setOption({
+        title: {
+        text: 'A pie',
+        show: true,
+        textStyle: {
+        color: 'black'
+        }
+        },
+        toolbox: {
+        feature: {
+        saveAsImage: {
+        type: 'jpg',
+        name: 'Pie Clip',
+        title: 'Save as an Image',
+        pixelRatio: 1
+        }
+        }
+        },
+        series: [{
+        name: 'Ref Page',
+        type: 'pie',
+        legendHoverLink: true,
+        radius: '60%',
+        data: drum
+        }
+        ]
+        });
+        break;
+    }
+    
+  </script>
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>    
+  <script src="/bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
+
+  </body>
+</html>

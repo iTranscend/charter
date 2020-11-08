@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Create Reports</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
+</head>
+<body>
+  <% include partials/nav %>
+
+  <div class="container">
+    <br>
+    <h3 class="text-primary">Create a Report</h3>
+    <form id="c=report-form" method="POST" action="/createReport">
+      <div class="form-group">
+        <label for="report-name">Report Name</label>
+        <input type="text" class="form-control" id="report-name" name="reportName" placeholder="Recent Sales">
+        <small id="Help" class="form-text text-muted">Please enter the name of your Report</small>
+      </div>
+
+      <div class="form-group">
+        <label for="report-description">Report Description</label>
+        <input type="text" class="form-control" id="report-description" name="reportDescription" placeholder="Recent Sales">
+        <small id="Help" class="form-text text-muted">Please enter a Description for your report</small>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-7">
+          <label for="cconnection-name">Select Connection</label>
+          <select id="cconnection-name" class="form-control" name="connectionID">
+            <% options.forEach(function (option) { %>
+              <option value="<%= option.id %>"><%= option.dbtype %> connection to <%= option.dbname %> on <%= option.hostname %></option>
+            <% }); %>
+          </select>
+        </div>
+
+        <div class="form-group col-md-5">
+          <label for="chart-type">Chart Type</label>
+          <select id="chart-type" class="form-control" name="chartType">
+            <option value="line" selected>Line Chart</option>
+            <option value="bar">Bar Chart</option>
+            <option value="pie">Pie Chart</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="query">Query</label>
+        <input type="text" class="form-control" id="query" name="query" placeholder="SELECT id, name, SUM(price) as amount FROM products group by name">
+        <small id="Help" class="form-text text-muted">Please enter the address of your host server</small>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="x-Axis">X-Axis</label>
+          <input type="text" class="form-control" id="x-Axis" name="xAxis" placeholder="name">
+          <small id="Help" class="form-text text-muted">Choose your x-Axis column (Specify as an alias if one was used)</small>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="y-Axis">Y-Axis</label>
+          <input type="text" class="form-control" id="y-Axis" name="yAxis" placeholder="amount">
+          <small id="Help" class="form-text text-muted">Choose your y-Axis column (Specify as an alias if one was used)</small>
+        </div>
+      </div>
+      
+
+      <div class="form-group float-right">
+          <input type="submit" class="btn btn-primary" value="Save">
+      </div>
+      
+    </form>
+  </div>
+
+  <% include partials/footer %>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>    
+  <script src="bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
+</body>
+</html>

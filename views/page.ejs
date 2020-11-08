@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Generate Reports</title>
+    <script src="/echarts.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <!-- <link rel="stylesheet" href="../public/bootstrap-4.3.1-dist/css/bootstrap.min.css"> -->
+  </head>
+  <body>
+    <% include partials/nav %>
+
+    <div class="container" id="group">
+      <br />
+      <h3>Report Group</h3>
+
+      <br /><br />
+      <% let reportList = reports %>
+
+      <script>
+        var getReports = <%- reportList %>;
+        // console.log(getReports)
+
+        count = 0;
+        getReports.forEach(report => {
+          let name = report.name
+          let chartType = report.chart_type
+          let description = report.description
+          let parameters = report.params
+          // let width = return parseInt(report.width, 10)
+          // let height = parseInt(report.height, 10)
+          let values = report.vals.map(item => { return parseInt(item, 10)})
+          console.log(name)
+          console.log(chartType)
+          console.log(description)
+          console.log(parameters)
+          console.log(values)
+
+          let div = document.createElement("div");
+          div.style.width = "600px"
+          div.style.height = "600px"
+          div.id = "main" + count;
+          document.getElementById("group").appendChild(div)
+
+          let divID = div.id;
+          console.log(divID)
+
+          switch(chartType) {
+            case "line":
+              var line = echarts.init(document.getElementById(divID));
+
+              option = {
+                title: {
+                  text: 'Line Chart'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: parameters
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: values,
+                    type: 'line'
+                }]
+              };
+
+              line.setOption(option);
+              break;
+            case "bar":
+              var bar = echarts.init(document.getElementById(divID));
+
+              option = {
+                title: {
+                  text: 'Bar Chart'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: parameters
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: values,
+                    type: 'bar'
+                }]
+              };
+
+              bar.setOption(option);
+              break;
+            case "pie":
+              let drum = [];
+
+              for(let i = 0; i <= parameters.length -1; i++) {
+                drum.push({name: parameters[i], value: values[i]})
+              }
+              console.log(drum)
+
+              let pie = echarts.init(document.getElementById(divID))
+
+              pie.setOption({
+                title: {
+                  text: 'A pie',
+                  show: true,
+                  textStyle: {
+                    color: 'black'
+                  }
+                },
+                toolbox: {
+                  feature: {
+                    saveAsImage: {
+                      type: 'jpg',
+                      name: 'Pie Clip',
+                      title: 'Save as an Image',
+                      pixelRatio: 1
+                    }
+                  }
+                },
+                series: [{
+                    name: 'Ref Page',
+                    type: 'pie',
+                    legendHoverLink: true,
+                    radius: '60%',
+                    data: drum
+                  }
+                ]
+              });
+              break;
+          }
+          count++
+        });
+      </script>
+      <br /><br />
+    </div>
+
+    <% include partials/footer %>
+
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <!-- <script src="bootstrap-4.3.1-dist/js/bootstrap.min.js"></script> -->
+  </body>
+</html>

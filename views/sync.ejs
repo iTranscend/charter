@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="Charter/bootstrap-4.3.1-dist/css/bootstrap.min.css"> -->
+
+</head>
+<body>
+  <div class="container">
+    <br>
+    <br>
+    
+    <h3 class="text-success">SoftID Sync App</h3>
+    <hr>
+    <form method="POST" action="/sync">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <h4 class="text-primary">Sender</h4>
+          </div>
+          <div class="form-group col-md-6">
+              <h4 class="text-primary">Receiver</h4>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="sender-ip">Host IP</label>
+            <input type="text" class="form-control" id="sender-ip" name="senderIp" placeholder="192.168.3.5" required>
+          </div>
+          <div class="form-group col-md-6">
+              <label for="receiver-ip">Host IP</label>
+              <input type="text" class="form-control" id="receiver-ip" name="receiverIp" placeholder="192.168.3.5" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="sender-username">DB Username</label>
+            <input type="text" class="form-control" id="sender-username" name="senderUsername" placeholder="fort-knox" required>
+          </div>
+          <div class="form-group col-md-6">
+              <label for="receiver-username">DB Username</label>
+              <input type="text" class="form-control" id="receiver-username" name="receiverUsername" placeholder="fort-knox" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="sender-password">DB Password</label>
+            <input type="password" class="form-control" id="sender-password" name="senderPassword" placeholder="192.168.3.5" required>
+          </div>
+          <div class="form-group col-md-6">
+              <label for="receiver-password">DB Password</label>
+              <input type="password" class="form-control" id="receiver-password" name="receiverPassword" placeholder="192.168.3.5" required>
+          </div>
+        </div>
+        <input type="submit" class="btn btn-primary btn-block" value="SYNC">
+      </form>
+  </div>
+
+  <script>
+    document.getElementById("progress").style.display = "none";
+    function validate() {
+      let senderIP = document.getElementById('sender-ip').value;
+      let senderUsername = document.getElementById('sender-username').value;
+      let senderPassword = document.getElementById('sender-password').value;
+      let receiverIp = document.getElementById('receiver-ip').value;
+      let receiverUsername = document.getElementById('receiver-username').value;
+      let receiverPassword = document.getElementById('receiver-password').value;
+
+      if ( senderIP == '' || senderUsername == '' || senderPassword == '' || receiverIp == '' || receiverUsername == '' || receiverPassword == '' ) {
+        document.getElementById('error').innerHTML = `<div id="alert-div" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                        <strong>Empty fields!</strong> You should check in on some of those fields above.
+                                                        <button type="button" class="close" onclick="close();" data-dismiss="alert" aria-label="Close">
+                                                          <span  aria-hidden="true">&times;</span>
+                                                        </button>
+                                                      </div>`;
+      } else {
+        document.getElementById("progress").style.display = "block";
+      }
+    }
+
+    function close() {
+      document.getElementById('alert-div').style.display = "none";
+    }
+  </script>
+  <script src="Charter/bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</body>
+</html>

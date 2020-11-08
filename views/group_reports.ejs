@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Group Reoports</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css" />
+  </head>
+  <body>
+    <% include partials/nav %>
+
+    <div class="container">
+      <br />
+      <h3>Report Grouping</h3>
+      <br />
+      <h4>Create a Report Group</h4>
+      <form id="page-form" method="POST" action="/createPage">
+        <div class="form-group">
+          <label for="pageName">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="pageName"
+            name="groupName"
+            aria-describedby="help"
+            placeholder=""
+          />
+          <small id="help" class="form-text text-muted"
+            >Enter the name of a report group</small
+          >
+        </div>
+        <input
+          type="submit"
+          class="btn btn-primary float-right"
+          value="Create"
+        />
+      </form>
+
+      <br />
+      <br />
+      <br />
+
+      <h4>Group Report</h4>
+      <form id="grouping-form" method="POST" action="/groupReport">
+        <div class="form-group col-md-6">
+          <label for="group">Select Group</label>
+          <select id="group" class="form-control" name="group">
+            <% options.forEach(function (option) { %>
+            <option value="<%= option.id %>"><%= option.name %></option>
+            <% }); %>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-3">
+            <label for="report">Select Report</label>
+            <select id="report" class="form-control" name="report">
+              <% reportOptions.forEach(function (option) { %>
+              <option value="<%= option.id %>"><%= option.name %></option>
+              <% }); %>
+            </select>
+          </div>
+          <div class="form-group col-md-2">
+            <label for="height">Height</label>
+            <input
+              type="number"
+              class="form-control"
+              id="height"
+              name="height"
+              placeholder="600"
+            />
+            <small id="Help" class="form-text text-muted"
+              >Please enter the height you want your report to assume in its
+              group</small
+            >
+          </div>
+          <div class="form-group col-md-2">
+            <label for="width">Width</label>
+            <input
+              type="number"
+              class="form-control"
+              id="width"
+              name="width"
+              placeholder="600"
+            />
+            <small id="help" class="form-text text-muted"
+              >Please enter the width you want your report to assume in its
+              group</small
+            >
+          </div>
+          <div class="form-group col-md-2">
+            <label for="unit">Unit</label>
+            <select id="unit" class="form-control" name="unit">
+              <option value="px">px</option>
+              <option value="%">%</option>
+            </select>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="sequence">Sequence</label>
+            <input
+              type="text"
+              class="form-control"
+              id="sequence"
+              name="sequence"
+              placeholder="2"
+            />
+            <small id="help" class="form-text text-muted"
+              >Please enter the position at which you want your report to be
+              placed in its group</small
+            >
+          </div>
+        </div>
+        <div class="form-group float-right">
+          <input type="submit" class="btn btn-primary" value="Save" />
+        </div>
+      </form>
+    </div>
+
+    <% include partials/footer %>
+
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
+  </body>
+</html>
