@@ -1,3 +1,3 @@
 # Charter
 
-### Data visualization tool for software developers to easily visualize the results of queries run on multiple database types
+### Data visualization tool for software developers to chart the results of queries run on multiple database types
